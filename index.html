@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+  <link rel="stylesheet" href="fonts/iconfont.css">
+  <link rel="stylesheet" href="css/index.css">
+  <title>地图</title>
+</head>
+
+<body>
+  <div class="header">
+    <i class="iconfont icon-suosou searchFont"></i>
+    <input id="keyWord" type="text" placeholder="输入关键字...">
+    <button id="search" type="button">搜索</button>
+  </div>
+  <div id="detail" class="hide">
+    <div class="detail-header">
+      <h1 class="detail-title"></h1>
+      <p class="color">版权所有 ©技术支持：上栗马管家&nbsp; &nbsp;</p>
+    </div>
+  </div>
+  <div id="intro">
+    <div class="intro-header">
+      <h1 class="pop-title"></h1>
+    </div>
+    <div id="detail-body">
+      <ul class="detail-tab">
+        <li data-id="tabs1" class="active">
+          简介
+        </li>
+        <li data-id="tabs2">
+          实景
+        </li>
+        <li id="navigate">导航</li>
+      </ul>
+      <div id="intro-detail">
+        <div id="tabs1"></div>
+        <div id="tabs2" class="hide"></div>
+        <div id="tabs3"></div>
+      </div>
+    </div>
+  </div>
+  <div id="allmap"></div>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qMoNPmYD0nQUYF4k05CDy8qw6uwF321I"></script>
+  <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="js/data.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

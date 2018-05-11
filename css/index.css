@@ -1,0 +1,150 @@
+body, html {
+  width: 100%;
+  height: 100%;
+  margin:0;
+  overflow:hidden;
+  font-family:"微软雅黑";
+}
+#allmap{
+  width:100%;
+  height: 89%;
+}
+.searchFont {
+  position: absolute;
+  top: 30px;
+  left: 15.5%;
+}
+.color{
+  color:#ccc;
+  text-align:center;
+}
+@media (max-width:768px) {
+  .searchFont {
+    left: 19%;
+  }
+}
+p{
+  margin-left:5px;
+  font-size:14px;
+}
+#keyWord {
+  height:34px;
+  width:50%;
+  border:none;
+  display:inline-block;
+  border:1px solid #ddd;
+  border-radius:3px;
+  padding-left:40px;
+  box-sizing:border-box;    
+}
+.header {
+  padding:20px 0;
+  text-align:center;
+  position:relative;
+  height:5%;
+}
+#search {
+  display:inline-block;
+  height:34px;
+  width:20%;
+  border:none;
+  background:#0894ec;
+  border-radius:3px;
+  color:#fff;
+  font-size:18px;    
+}
+.BMap_cpyCtrl, .anchorBL {
+  display:none !important;
+}
+#detail{
+  position: absolute;
+  left:0;
+  bottom:0;
+  z-index:10;
+}
+.detail-title {
+  background:#0894ec;
+  padding:15px 0;
+  color:#fff;
+  margin:0;
+  font-weight:500;
+  font-size:1.5em !important;
+  padding-left:20px;
+}
+.detail-header p {
+  padding:0;
+  background:#fff;
+  margin:0;
+}
+.detail-tab {
+  display:flex;
+  text-align:center;
+  justify-content:space-between;
+  list-style: none;
+  padding:0;
+  margin:0;
+  margin:0 20px 20px;
+}
+.detail-tab li {
+  flex-grow:1;
+  color:#5f646e;
+  margin:-1px;
+  padding:20px;
+  cursor:default;
+}
+#detail{
+  width:100%;
+}
+.hide {
+  display:none;
+}
+.right {
+  float:right;
+}
+.detail-title span {
+  line-height: 35px;
+  padding-right: 30px;
+  font-size: 24px;
+}
+.pop-title {
+  text-align:center;
+  margin:0;
+  background:#f7f7f8;
+  border-bottom:1px solid #ddd;
+  color: #3d4145;
+  padding:15px;
+  font-weight: 500;
+  font-size:1.5em !important;
+}
+.pop-title span {
+  line-height: 32px;
+  padding-right: 30px;
+  font-size: 24px;
+}
+#intro {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  z-index:100;
+  background:rgba(0,0,0,.2);
+  height:100%;
+  transform:translate(0,100%);
+}
+#detail-body {
+  background:#fff;
+  height:100%;
+  overflow:auto;
+}
+.intro-header {
+  margin-top:10%;
+}
+.detail-tab {
+  border-bottom:1px solid #ddd;
+}
+li.active {
+  border-bottom:1px solid #0894ec;
+  color:#0894ec;
+}
+#tabs2 img {
+  width:100%;  
+}
