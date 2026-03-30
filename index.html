@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -45,7 +45,372 @@
   <div id="allmap"></div>
   <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=qMoNPmYD0nQUYF4k05CDy8qw6uwF321I"></script>
   <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-  <script type="text/javascript" src="js/data.js"></script>
+  <script type="text/javascript" src="js/data.js"></script> -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Microsoft YaHei","微软雅黑","PingFang SC","Helvetica","Helvetica Neue","Hiragino Sans GB","Arial","Avenir","Roboto","-apple-system","BlinkMacSystemFont",system-ui,"Segoe UI","Noto Sans",sans-serif,ui-sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+            background-color: #ededed;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 512px;
+            margin: 0 auto;
+            overflow: auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: center;
+            padding: 8px 0 16px;
+            height: 48px;
+        }
+        .status-completed {
+            padding-right: 12px;
+        }
+        .status-pending {
+            border-left: 1px solid #ccc;
+            padding-left: 12px;
+            color: #f63;
+        }
+        
+        .section {
+            margin: 0 auto;
+            font-size: .875rem;
+            line-height: 1.25rem;
+            padding: 10px 10px 0;
+        }
+        .section-header {
+            background-color: #fff;
+            border-radius: 0.375rem;
+            padding: 1.375rem;
+            height: 136.5px;
+        }
+        .section-content {
+            margin-top: .625rem;
+            background-color: #fff;
+            border-radius: 0.375rem;
+        }
+        .activity-title {
+            color: #333;
+            line-height: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .activity-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .activity-image {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .activity-details {
+            flex: 1;
+        }
+        
+        .activity-name {
+            color: #222;
+            font-size: 0.875rem;
+        }
+        .activity-content {
+            display: flex;
+            justify-content: space-between;
+            font-size: .75rem;
+            color: #999;
+            line-height: 1rem;
+            margin-top: .25rem;
+        }
+        
+        .activity-price {
+            font-size: 14px;
+            color: #ff4d4f;
+            font-weight: bold;
+        }
+        
+        .order-number {
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ebeef5;
+        }
+        
+        .order-number-label {
+            font-size: 14px;
+            color: #222;
+        }
+        
+        .order-number-value {
+            font-size: 14px;
+        }
+        .copy {
+            color: #999;
+            display: flex;
+            align-items: center;
+        }
+        .copy-image {
+            height: 14px;
+            width: 14px;
+            margin-right: 4px;
+        }
+        
+        .order-details {
+            padding: 10px;
+            color: #666;
+        }
+        
+        .order-detail-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            line-height: 1.5rem;
+        }
+        
+        .expand-button {
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .refund-section {
+            width: 100%;
+            background: #fff;
+            padding: .625rem;
+            margin: .625rem 0;
+            border-radius: .375rem;
+        }
+        
+        .refund-title {
+            font-size: .875rem;
+            font-weight: 400;
+            color: #f63;
+        }
+        
+        .refund-rules p {
+            font-size: .875rem;
+            font-weight: 400;
+            color: #222;
+            margin-top: .3125rem;
+        }
+        .refund-rules p .text-main {
+            color: #f63;
+        }
+        .venue-section {
+            width: 100%;
+            background: #fff;
+            padding: .625rem;
+            margin: .625rem 0;
+            border-radius: .375rem;
+        }
+        
+        .venue-info {
+            display: flex;
+            align-items: center;
+            font-size: .875rem;
+        }
+        
+        .venue-details {
+            padding-left: .625rem;
+        }
+        
+        .venue-address {
+            color: #999;
+        }
+        
+        .tips-section {
+            font-size: 14px;
+            background-color: #fff;
+        }
+        
+        .tips-title {
+            color: #ff794c;
+        }
+        
+        .pre-line {
+            color: #666;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align: center;
+    color: #666;
+    font-size: 12px;
+">lhqkl.ydmap.cn</div>
+        <div class="header">
+            <div class="status-completed">已完成</div>
+            <div class="status-pending">未核验</div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="activity-title">龙华文体中心</div>
+                <div class="activity-info">
+                    <img src="https://cdn.ydmap.cn/image/f66132e4-31f0-42f4-8efd-944716660824.jpg@!img_small_200X200_prew" alt="龙华文体中心-健身" class="activity-image">
+                    <div class="activity-details">
+                        <div class="activity-name">龙华文体中心-健身</div>
+                        <div class="activity-content">
+                            <div class="activity-time">2026-03-26 18:00-19:00 体质测定与运动健身指导站 × 1张</div>
+                            <div style="display:flex;">
+                                <del>￥0</del>
+                                <div style="color:#666"> ￥0 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="order-number">
+                    <div>
+                        <span class="order-number-label">订单号:</span>
+                        <span class="order-number-value">2230106502384861185</span>
+                    </div>
+                    <div class="copy">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAA50lEQVR4AZySMQqDQBBF3UULIXiGQMqcIKmUnCInEE+k3iUQ0+QGKdMmpU3AQnAzf+HLrtkiKHxmnJn3dxnV0conCNZ1nYfknvEDtm1rtNbXkNAj7IFN05yUUrkxZp+m6SZJkp3kx7Is1TRNBSDcBHEG4SbQRQY7iY9hGD7jOD4lv6NXVVUHgLIgXeAKd1eoYVhuc0CkLMiXpSvqrMVx/MI75YEshmKWZW+3/jfY9/15FSjQVhTx6t6JXBIGKNZkSTcsjXULzi7y4bF6V/gRMMwZ5JAFkcBNXIuQ0MOMqxlEEa4hobfUFwAA//8pyJhDAAAABklEQVQDAOfWkR1/kozvAAAAAElFTkSuQmCC" alt="龙华文体中心-健身" class="copy-image">
+                        <span>复制</span>
+                    </div>
+                </div>
+                <div class="order-details">
+                    <div class="order-detail-item">
+                        <span class="order-detail-label">订单原价</span>
+                        <span class="order-detail-value"> ￥0 </span>
+                    </div>
+                    <div class="order-detail-item">
+                        <span class="order-detail-label">订单成交价</span>
+                        <span class="order-detail-value"> ￥0 </span>
+                    </div>
+                    <div class="order-detail-item">
+                        <span class="order-detail-label">实付款</span>
+                        <span class="order-detail-value"> ￥0 </span>
+                    </div>
+                    <div class="order-detail-item" id="create-time">
+                        <span class="order-detail-label">创建时间</span>
+                        <span class="order-detail-value create-time">2026-03-24 20:16:07</span>
+                    </div>
+                    <div class="order-detail-item" id="pay-method">
+                        <span class="order-detail-label">支付方式</span>
+                        <span class="order-detail-value">会员账户</span>
+                    </div>
+                    <div class="order-detail-item" id="pay-time">
+                        <span class="order-detail-label">支付时间</span>
+                        <span class="order-detail-value order-time">2026-03-24 20:16:07</span>
+                    </div>
+                    <div class="order-detail-item" id="order-source">
+                        <span class="order-detail-label">下单来源</span>
+                        <span class="order-detail-value">龙华文体云</span>
+                    </div>
+                    <div class="expand-button" onclick="toggleExpand()" id="expand-btn">
+                        收起 <img class="expand-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAZElEQVR4AdyQQQrAMAgEi8/pg/oV8Zab3y5zCGhqCeSWBBaXdecQ5Vp8J4Du3tDfCco/AojIjfAV/AEpAqjqg/BkI5xAChQBehFPxq5nzAQSUGRGVVkCzaxFIPpxl8BYnPmNwBcAAP//2vkvaQAAAAZJREFUAwCfviAdagMB/QAAAABJRU5ErkJggg=="/>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="refund-section">
+                <div class="refund-title">退款规则:</div>
+                <div class="refund-rules">
+                    <p>•不可退款原因: 若已过最晚可取消/退款时间，预定成功后<span class="text-main">不可以取消/退款;</span></p>
+                    <p> •本订单可以在 <span class="text-main text-main-time"> 2026-03-26 17:30:00 </span> 之前取消/可退，超时不可取消/退款 </p>
+                </div>
+            </div>
+            
+            <div class="venue-section">
+                <div class="venue-info">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACXElEQVR4AXyUvWtTYRTG34RmkOKiQwdR6OReKa2bk/gXqIuDkeQSYoXrYAdFEDsVFIQg+aKCi0OWQjsURHBsobRQOrRDP6BLxw6hUz76e9577m0uSRrOk/O8z3nOufd9702ybsynWCzOgHIQBL/IJ4LxMnxmTJsbObBQKHyjYRNU+v3+k0wm818QlwY2zQNNx9BArn5O83tsO2C+Xq9P12q114K4NLAjj7zwVKQGYvhOdQqs0KxhW/BUoG+BecQVMGU90CiSgZzPM6QQrNLwhpxEqVR6KCQCxDyr0NB6oe76DDmfzygXvV5P24U6h/Exd7Df7XYPBHFpvsiXeS+sF8UG5vP526xmwUaz2TwhuzAMb2Fch0+Sy4LxddXgzrwb8FmbEd1hNpt9hDgBDoGPdrv9AnKHQV8ajcZPQVya1aA+1DNhM1IDHeK2t/DFU7xLcrlc7p+yEPO4Ji3uIeumooFc+VjFTqfTVhYw6MoO7YPWQszjmmm+J57hnzJX3FORfE9ZqFarOr9T+FsexrYgDk6tBnUu7iH7GX4gr8CRc24NcYGcBPo0i2Wgd1NYNg0pCutZQ9eMaMsqsY06eY47qZKTwLgI7hsWkwLEvHPWi2KvjZhtowIPMH4k3xjmCTBVrBc6MFAr7mKBLfyFL/Hjf0keGVZbklc9gyZ/hoMCfwJPWZ9h/sOv4hM8FdJUQzwzL/Q6hgaqxFUfkC95Fb6ytXdwH+LSWFyaB5qOkQNloWGSvAt+sMVXgjjYtRp0OMYOlJVG/TO32OJvAa1lGnR03DhQLQx4Tm4JxqHj4woAAP//XhKURAAAAAZJREFUAwAGsBvwQtzzJAAAAABJRU5ErkJggg=="/>
+                    <div class="venue-details">
+                        <div style="color:#666;">龙华文体中心</div>
+                        <div class="venue-address">广东省深圳市龙华区龙华大道与清泉路交汇处</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tips-section">
+            <div class="tips-title">温馨提示:</div>
+            <div class="pre-line terms-conditions-content">使用须知：
+            1、出示订单【入场码】和同伴【签到码】在闸机扫码进入场馆；
+            2、羽毛球公益时段：每天限下1个订单，每个订单仅订1片场地，限订2小时，每片场1小时限4人使用，2小限制6人使用；
+            出示入场码在闸机扫码进入；
+            3、邀请人可在订单中【邀请同伴】进行邀请，预订1小时限制4人入场（含订场人），预订2小时限制6人入场（含订场人）；
+            4、被邀请参与人在【我的活动】中查看订场活动，出示【签到码】在闸机扫码进入；
+            5、已预订的场地可自助退订，过期不可退订;
+            6、公益场若需退订需提前30分钟自助退场，在【个人中心】-【我的订单】自助取消，若超时请联系前台服务人员；
+            7、因恶劣天气等不可抗力因素导致场地无法使用，场馆有权要求顾客更改订场时间或取消订场；
+            8、【咨询电话】体育馆一楼前台：28189179；游泳馆前台：28189192。</div>
+        </div>
+    </div>
+    
+    <script>
+        let isExpanded = true;
+        const activityTime = document.querySelector(".activity-time")
+        const textMainTime = document.querySelector(".text-main-time")
+        const createTime = document.querySelector(".create-time")
+        const orderTime = document.querySelector(".order-time")
+        const date = new Date()
+        const year = date.getFullYear()
+        const month = date.getMonth() + 1
+        const day = date.getDate()
+        const weekDay = date.getDay();
+        // 判断是否为周一
+        const isMonday = weekDay === 1;
+        activityTime.innerHTML = `${year}-${month > 9 ? month : '0' + month}-${day} 18:00-19:00 体质测定与运动健身指导站 × 1张`
+        textMainTime.innerHTML = ` ${year}-${month > 9 ? month : '0' + month}-${day} 17:30:00 `
+        createTime.innerHTML = `${year}-${month > 9 ? month : '0' + month}-${day - (isMonday ? 2 : 1)} 20:16:07`
+        orderTime.innerHTML = `${year}-${month > 9 ? month : '0' + month}-${day - (isMonday ? 2 : 1)} 20:16:07`
+        function toggleExpand() {
+            const createTime = document.getElementById('create-time');
+            const payMethod = document.getElementById('pay-method');
+            const payTime = document.getElementById('pay-time');
+            const orderSource = document.getElementById('order-source');
+            const expandBtn = document.getElementById('expand-btn');
+            
+            isExpanded = !isExpanded;
+            
+            if (isExpanded) {
+                // 展开状态
+                createTime.style.display = 'flex';
+                payMethod.style.display = 'flex';
+                payTime.style.display = 'flex';
+                orderSource.style.display = 'flex';
+                expandBtn.innerHTML = '收起 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAZElEQVR4AdyQQQrAMAgEi8/pg/oV8Zab3y5zCGhqCeSWBBaXdecQ5Vp8J4Du3tDfCco/AojIjfAV/AEpAqjqg/BkI5xAChQBehFPxq5nzAQSUGRGVVkCzaxFIPpxl8BYnPmNwBcAAP//2vkvaQAAAAZJREFUAwCfviAdagMB/QAAAABJRU5ErkJggg=="/>';
+            } else {
+                // 收起状态
+                createTime.style.display = 'none';
+                payMethod.style.display = 'none';
+                payTime.style.display = 'none';
+                orderSource.style.display = 'none';
+                expandBtn.innerHTML = '展开 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAgklEQVR4AeSQsQ2AIBREhcV0BEexg9YKaudwB1zBHWwt3MC7BJVPoLGwkfyfXO7uheTr5uX7Heic62q3yjNxHK11670POQxvYpb6AjTGjEqpBcUbhp7h7cyqIINYWAEELrwtepDPiB8v21o7QB/cqCHlFEFWAPRc6tJWwVI59b4HTwAAAP//drNTkwAAAAZJREFUAwDgqiYdFCodHQAAAABJRU5ErkJggg=="/>';
+            }
+        }
+        
+        function copyOrderNumber() {
+            const orderNumber = document.querySelector('.order-number-value').textContent;
+            navigator.clipboard.writeText(orderNumber).then(() => {
+                alert('订单号已复制');
+            });
+        }
+    </script>
+</body>
+</html>
+
   <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
